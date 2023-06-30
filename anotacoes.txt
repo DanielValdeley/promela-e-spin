@@ -1,0 +1,3 @@
+- uma var para guardar/verificar que o numero que foi transmitida
+- pensa em coisas pontualmente
+- ex: numero de seq do ultimo ack recebido
