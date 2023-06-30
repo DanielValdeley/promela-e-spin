@@ -2,5 +2,5 @@
 - pensa em coisas pontualmente
 - ex: numero de seq do ultimo ack recebido
 
-[] baixar do moodle a versao atual do spin adicionada 30/06/2023 - 14:~
+[ok] baixar do moodle a versao atual do spin adicionada 30/06/2023 - 14:~
 local: verificacao de protocolos
