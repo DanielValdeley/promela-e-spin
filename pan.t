@@ -24,37 +24,54 @@ settable(void)
 
 	trans = (Trans ***) emalloc(3*sizeof(Trans **));
 
-	/* proctype 1: p2 */
+	/* proctype 1: receptor */
 
-	trans[1] = (Trans **) emalloc(7*sizeof(Trans *));
+	trans[1] = (Trans **) emalloc(14*sizeof(Trans *));
 
-	trans[1][4]	= settr(13,0,3,1,0,".(goto)", 0, 2, 0);
-	T = trans[1][3] = settr(12,0,0,0,0,"DO", 0, 2, 0);
-	T = T->nxt	= settr(12,0,1,0,0,"DO", 0, 2, 0);
-	    T->nxt	= settr(12,0,2,0,0,"DO", 0, 2, 0);
-	trans[1][1]	= settr(10,0,3,3,3,"canal1!1", 1, 3, 0);
-	trans[1][2]	= settr(11,0,3,4,4,"canal2!1", 1, 4, 0);
-	trans[1][5]	= settr(14,0,6,1,0,"break", 0, 2, 0);
-	trans[1][6]	= settr(15,0,0,5,5,"-end-", 0, 3500, 0);
+	trans[1][11]	= settr(28,0,10,1,0,".(goto)", 0, 2, 0);
+	T = trans[1][10] = settr(27,0,0,0,0,"DO", 0, 2, 0);
+	T = T->nxt	= settr(27,0,1,0,0,"DO", 0, 2, 0);
+	T = T->nxt	= settr(27,0,3,0,0,"DO", 0, 2, 0);
+	    T->nxt	= settr(27,0,7,0,0,"DO", 0, 2, 0);
+	trans[1][1]	= settr(18,0,2,3,3,"tx?data,num", 1, 503, 0);
+	trans[1][2]	= settr(19,0,10,1,0,"(1)", 0, 2, 0);
+	trans[1][3]	= settr(20,0,4,4,4,"tx?data,eval(seq)", 1, 503, 0);
+	trans[1][4]	= settr(21,0,5,5,0,"printf('receptor recebeu data %d\\n',seq)", 0, 2, 0);
+	trans[1][5]	= settr(22,0,6,6,6,"rx!ack,seq", 1, 4, 0);
+	trans[1][6]	= settr(23,0,10,7,7,"seq = !(seq)", 0, 2, 0);
+	trans[1][7]	= settr(24,0,8,8,8,"tx?data,eval(!(seq))", 1, 503, 0);
+	trans[1][8]	= settr(25,0,9,9,0,"printf('receptor recebeu data duplicado %d\\n',!(seq))", 0, 2, 0);
+	trans[1][9]	= settr(26,0,10,10,10,"rx!ack,!(seq)", 1, 4, 0);
+	trans[1][12]	= settr(29,0,13,1,0,"break", 0, 2, 0);
+	trans[1][13]	= settr(30,0,0,11,11,"-end-", 0, 3500, 0);
 
-	/* proctype 0: p1 */
+	/* proctype 0: transmissor */
 
-	trans[0] = (Trans **) emalloc(11*sizeof(Trans *));
+	trans[0] = (Trans **) emalloc(19*sizeof(Trans *));
 
-	trans[0][8]	= settr(7,0,7,1,0,".(goto)", 0, 2, 0);
-	T = trans[0][7] = settr(6,0,0,0,0,"DO", 0, 2, 0);
-	T = T->nxt	= settr(6,0,1,0,0,"DO", 0, 2, 0);
-	    T->nxt	= settr(6,0,4,0,0,"DO", 0, 2, 0);
-	trans[0][1]	= settr(0,0,2,6,6,"canal1?msg", 1, 503, 0);
-	trans[0][2]	= settr(1,0,7,7,7,"n1 = (n1+1)", 0, 2, 0); /* m: 3 -> 0,7 */
-	reached0[3] = 1;
-	trans[0][3]	= settr(0,0,0,0,0,"assert((n1<10))",0,0,0);
-	trans[0][4]	= settr(3,0,5,8,8,"canal2?msg", 1, 504, 0);
-	trans[0][5]	= settr(4,0,7,9,9,"n2 = (n2+1)", 0, 2, 0); /* m: 6 -> 0,7 */
-	reached0[6] = 1;
-	trans[0][6]	= settr(0,0,0,0,0,"assert((n2<15))",0,0,0);
-	trans[0][9]	= settr(8,0,10,1,0,"break", 0, 2, 0);
-	trans[0][10]	= settr(9,0,0,10,10,"-end-", 0, 3500, 0);
+	trans[0][1]	= settr(0,0,2,12,12,"tx!data,seq", 1, 3, 0);
+	trans[0][2]	= settr(1,0,15,13,0,"printf('transmissor transmitiu msg %d\\n',seq)", 0, 2, 0);
+	trans[0][16]	= settr(15,0,15,1,0,".(goto)", 0, 2, 0);
+	T = trans[0][15] = settr(14,0,0,0,0,"DO", 0, 2, 0);
+	T = T->nxt	= settr(14,0,3,0,0,"DO", 0, 2, 0);
+	T = T->nxt	= settr(14,0,5,0,0,"DO", 0, 2, 0);
+	T = T->nxt	= settr(14,0,9,0,0,"DO", 0, 2, 0);
+	    T->nxt	= settr(14,0,12,0,0,"DO", 0, 2, 0);
+	trans[0][3]	= settr(2,0,4,14,14,"rx?ack,num", 1, 504, 0);
+	trans[0][4]	= settr(3,0,15,1,0,"(1)", 0, 2, 0);
+	trans[0][5]	= settr(4,0,6,15,15,"rx?ack,eval(seq)", 1, 504, 0);
+	trans[0][6]	= settr(5,0,1,16,16,"printf('transmissor recebeu ack %d\\n',seq)", 0, 2, 0); /* m: 7 -> 0,1 */
+	reached0[7] = 1;
+	trans[0][7]	= settr(0,0,0,0,0,"seq = !(seq)",0,0,0);
+	trans[0][8]	= settr(7,0,1,1,0,"goto ocioso", 0, 2, 0);
+	trans[0][9]	= settr(8,0,10,17,17,"rx?ack,eval(!(seq))", 1, 504, 0);
+	trans[0][10]	= settr(9,0,11,18,0,"printf('transmissor recebeu ack incorreto: %d\\n',!(seq))", 0, 2, 0);
+	trans[0][11]	= settr(10,0,15,1,0,"(1)", 0, 2, 0);
+	trans[0][12]	= settr(11,0,13,19,0,"(timeout)", 1, 3000, 0);
+	trans[0][13]	= settr(12,0,14,20,0,"printf('retransmitiu data %d\\n',seq)", 0, 2, 0);
+	trans[0][14]	= settr(13,0,15,21,21,"tx!data,seq", 1, 3, 0);
+	trans[0][17]	= settr(16,0,18,1,0,"break", 0, 2, 0);
+	trans[0][18]	= settr(17,0,0,22,22,"-end-", 0, 3500, 0);
 	/* np_ demon: */
 	trans[_NP_] = (Trans **) emalloc(3*sizeof(Trans *));
 	T = trans[_NP_][0] = settr(9997,0,1,_T5,0,"(np_)", 1,2,0);

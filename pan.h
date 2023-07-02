@@ -1,8 +1,8 @@
 #ifndef PAN_H
 #define PAN_H
 
-#define SpinVersion	"Spin Version 6.5.1 -- 20 December 2019"
-#define PanSource	"teste.pml"
+#define SpinVersion	"Spin Version 6.5.2 -- 30 May 2023"
+#define PanSource	"pe.pml"
 
 #define G_long	8
 #define G_int	4
@@ -102,6 +102,7 @@
 #ifndef NFAIR
 	#define NFAIR	2	/* must be >= 2 */
 #endif
+#define ETIM	1
 #define HAS_CODE	1
 #if defined(RANDSTORE) && !defined(RANDSTOR)
 	#define RANDSTOR	RANDSTORE
@@ -110,7 +111,7 @@
 #if !defined(HAS_LAST) && defined(BCS)
 	#define HAS_LAST	1 /* use it, but */
 	#ifndef STORE_LAST
-		#define NO_LAST	1 /* dont store it */
+		#define NO_LAST	1 /* don't store it */
 	#endif
 #endif
 #if defined(BCS) && defined(BITSTATE)
@@ -132,15 +133,15 @@ typedef struct S_F_MAP {
 	int upto;
 } S_F_MAP;
 
-#define _nstates1	7	/* p2 */
-#define minseq1	10
-#define maxseq1	15
-#define _endstate1	6
+#define _nstates1	14	/* receptor */
+#define minseq1	18
+#define maxseq1	30
+#define _endstate1	13
 
-#define _nstates0	11	/* p1 */
+#define _nstates0	19	/* transmissor */
 #define minseq0	0
-#define maxseq0	9
-#define _endstate0	10
+#define maxseq0	17
+#define _endstate0	18
 
 extern short src_ln1[];
 extern short src_ln0[];
@@ -148,8 +149,8 @@ extern S_F_MAP src_file1[];
 extern S_F_MAP src_file0[];
 
 #define T_ID	unsigned char
-#define _T5	11
-#define _T2	12
+#define _T5	23
+#define _T2	24
 #define WS		8 /* word size in bytes */
 #define SYNC	0
 #define ASYNC	2
@@ -164,40 +165,41 @@ extern S_F_MAP src_file0[];
 	#endif
 #endif
 
-#define Pp2	((P1 *)_this)
-typedef struct P1 { /* p2 */
+#define Preceptor	((P1 *)_this)
+typedef struct P1 { /* receptor */
 	unsigned _pid : 8;  /* 0..255 */
 	unsigned _t   : 3; /* proctype */
-	unsigned _p   : 5; /* state    */
+	unsigned _p   : 6; /* state    */
 #ifdef HAS_PRIORITY
 	unsigned _priority : 8; /* 0..255 */
 #endif
+	unsigned seq : 1;
+	unsigned num : 1;
 } P1;
-#define Air1	(sizeof(P1) - 2)
+#define Air1	(sizeof(P1) - 3)
 
-#define Pp1	((P0 *)_this)
-typedef struct P0 { /* p1 */
+#define Ptransmissor	((P0 *)_this)
+typedef struct P0 { /* transmissor */
 	unsigned _pid : 8;  /* 0..255 */
 	unsigned _t   : 3; /* proctype */
-	unsigned _p   : 5; /* state    */
+	unsigned _p   : 6; /* state    */
 #ifdef HAS_PRIORITY
 	unsigned _priority : 8; /* 0..255 */
 #endif
-	int msg;
-	int n1;
-	int n2;
+	unsigned seq : 1;
+	unsigned num : 1;
 } P0;
-#define Air0	(sizeof(P0) - Offsetof(P0, n2) - 1*sizeof(int))
+#define Air0	(sizeof(P0) - 3)
 
 typedef struct P2 { /* np_ */
 	unsigned _pid : 8;  /* 0..255 */
 	unsigned _t   : 3; /* proctype */
-	unsigned _p   : 5; /* state    */
+	unsigned _p   : 6; /* state    */
 #ifdef HAS_PRIORITY
 	unsigned _priority : 8; /* 0..255 */
 #endif
 } P2;
-#define Air2	(sizeof(P2) - 2)
+#define Air2	(sizeof(P2) - 3)
 
 #define Pclaim	P0
 #ifndef NCLAIMS
@@ -389,8 +391,8 @@ typedef struct State {
 		unsigned short _event;
 	#endif
 #endif
-	uchar canal1;
-	uchar canal2;
+	uchar tx;
+	uchar rx;
 #ifdef TRIX
 	/* room for 512 proc+chan ptrs, + safety margin */
 	char *_ids_[MAXPROC+MAXQ+4];
@@ -420,8 +422,8 @@ typedef struct TRIX_v6 {
 #define _endstate2	2 /* np_ */
 
 #define _start2	0 /* np_ */
-#define _start1	3
-#define _start0	7
+#define _start1	10
+#define _start0	1
 #ifdef NP
 	#define ACCEPT_LAB	1 /* at least 1 in np_ */
 #else
@@ -459,14 +461,16 @@ typedef struct Q2 {
 	uchar Qlen;	/* q_size */
 	uchar _t;	/* q_type */
 	struct {
-		int fld0;
+		uchar fld0;
+		unsigned fld1 : 1;
 	} contents[1];
 } Q2;
 typedef struct Q1 {
 	uchar Qlen;	/* q_size */
 	uchar _t;	/* q_type */
 	struct {
-		int fld0;
+		uchar fld0;
+		unsigned fld1 : 1;
 	} contents[1];
 } Q1;
 typedef struct Q0 {	/* generic q */
@@ -783,7 +787,7 @@ typedef struct BFS_State {
 } BFS_State;
 #endif
 
-void qsend(int, int, int, int);
+void qsend(int, int, int, int, int);
 
 #define Addproc(x,y)	addproc(256, y, x)
 #define LOCAL	1
@@ -795,7 +799,7 @@ void qsend(int, int, int, int);
 #define GLOBAL	7
 #define BAD	8
 #define ALPHA_F	9
-#define NTRANS	13
+#define NTRANS	25
 #if defined(BFS_PAR) || NCORE>1
 	void e_critical(int);
 	void x_critical(int);
