@@ -22,56 +22,105 @@ settable(void)
 {	Trans *T;
 	Trans *settr(int, int, int, int, int, char *, int, int, int);
 
-	trans = (Trans ***) emalloc(3*sizeof(Trans **));
+	trans = (Trans ***) emalloc(5*sizeof(Trans **));
+
+	/* proctype 3: confirm */
+
+	trans[3] = (Trans **) emalloc(16*sizeof(Trans *));
+
+	trans[3][7]	= settr(54,0,6,1,0,".(goto)", 0, 2, 0);
+	T = trans[3][6] = settr(53,0,0,0,0,"DO", 0, 2, 0);
+	T = T->nxt	= settr(53,0,1,0,0,"DO", 0, 2, 0);
+	    T->nxt	= settr(53,0,5,0,0,"DO", 0, 2, 0);
+	trans[3][1]	= settr(48,0,11,3,0,"(!(((transmissor._p==espera)&&(guarda_nseq_TX==guarda_mseq_RX))))", 1, 2, 0);
+	trans[3][2]	= settr(49,0,11,1,0,"goto accept_S2", 0, 2, 0);
+	T = trans[ 3][5] = settr(52,2,0,0,0,"ATOMIC", 1, 2, 0);
+	T->nxt	= settr(52,2,3,0,0,"ATOMIC", 1, 2, 0);
+	trans[3][3]	= settr(50,0,6,4,4,"(!((transmissor._p==ocioso)))", 1, 2, 0); /* m: 4 -> 6,0 */
+	reached3[4] = 1;
+	trans[3][4]	= settr(0,0,0,0,0,"assert(!(!((transmissor._p==ocioso))))",0,0,0);
+	trans[3][8]	= settr(55,0,11,1,0,"break", 0, 2, 0);
+	trans[3][12]	= settr(59,0,11,1,0,".(goto)", 0, 2, 0);
+	T = trans[3][11] = settr(58,0,0,0,0,"DO", 0, 2, 0);
+	    T->nxt	= settr(58,0,9,0,0,"DO", 0, 2, 0);
+	trans[3][9]	= settr(56,0,11,5,0,"(!(((transmissor._p==espera)&&(guarda_nseq_TX==guarda_mseq_RX))))", 1, 2, 0);
+	trans[3][10]	= settr(57,0,11,1,0,"goto accept_S2", 0, 2, 0);
+	trans[3][13]	= settr(60,0,14,1,0,"break", 0, 2, 0);
+	trans[3][14]	= settr(61,0,15,1,0,"(1)", 0, 2, 0);
+	trans[3][15]	= settr(62,0,0,6,6,"-end-", 0, 3500, 0);
+
+	/* proctype 2: recv */
+
+	trans[2] = (Trans **) emalloc(14*sizeof(Trans *));
+
+	trans[2][6]	= settr(40,0,5,1,0,".(goto)", 0, 2, 0);
+	T = trans[2][5] = settr(39,0,0,0,0,"DO", 0, 2, 0);
+	T = T->nxt	= settr(39,0,1,0,0,"DO", 0, 2, 0);
+	    T->nxt	= settr(39,0,3,0,0,"DO", 0, 2, 0);
+	trans[2][1]	= settr(35,0,10,7,0,"((!(!((transmissor._p==ocioso)))&&!((guarda_nseq_TX==guarda_mseq_RX))))", 1, 2, 0);
+	trans[2][2]	= settr(36,0,10,1,0,"goto accept_S4", 0, 2, 0);
+	trans[2][3]	= settr(37,0,5,1,0,"(1)", 0, 2, 0);
+	trans[2][4]	= settr(38,0,5,1,0,"goto T0_init", 0, 2, 0);
+	trans[2][7]	= settr(41,0,10,1,0,"break", 0, 2, 0);
+	trans[2][11]	= settr(45,0,10,1,0,".(goto)", 0, 2, 0);
+	T = trans[2][10] = settr(44,0,0,0,0,"DO", 0, 2, 0);
+	    T->nxt	= settr(44,0,8,0,0,"DO", 0, 2, 0);
+	trans[2][8]	= settr(42,0,10,8,0,"(!((guarda_nseq_TX==guarda_mseq_RX)))", 1, 2, 0);
+	trans[2][9]	= settr(43,0,10,1,0,"goto accept_S4", 0, 2, 0);
+	trans[2][12]	= settr(46,0,13,1,0,"break", 0, 2, 0);
+	trans[2][13]	= settr(47,0,0,9,9,"-end-", 0, 3500, 0);
 
 	/* proctype 1: receptor */
 
-	trans[1] = (Trans **) emalloc(14*sizeof(Trans *));
+	trans[1] = (Trans **) emalloc(16*sizeof(Trans *));
 
-	trans[1][11]	= settr(28,0,10,1,0,".(goto)", 0, 2, 0);
-	T = trans[1][10] = settr(27,0,0,0,0,"DO", 0, 2, 0);
-	T = T->nxt	= settr(27,0,1,0,0,"DO", 0, 2, 0);
-	T = T->nxt	= settr(27,0,3,0,0,"DO", 0, 2, 0);
-	    T->nxt	= settr(27,0,7,0,0,"DO", 0, 2, 0);
-	trans[1][1]	= settr(18,0,2,3,3,"tx?data,num", 1, 503, 0);
-	trans[1][2]	= settr(19,0,10,1,0,"(1)", 0, 2, 0);
-	trans[1][3]	= settr(20,0,4,4,4,"tx?data,eval(seq)", 1, 503, 0);
-	trans[1][4]	= settr(21,0,5,5,0,"printf('receptor recebeu data %d\\n',seq)", 0, 2, 0);
-	trans[1][5]	= settr(22,0,6,6,6,"rx!ack,seq", 1, 4, 0);
-	trans[1][6]	= settr(23,0,10,7,7,"seq = !(seq)", 0, 2, 0);
-	trans[1][7]	= settr(24,0,8,8,8,"tx?data,eval(!(seq))", 1, 503, 0);
-	trans[1][8]	= settr(25,0,9,9,0,"printf('receptor recebeu data duplicado %d\\n',!(seq))", 0, 2, 0);
-	trans[1][9]	= settr(26,0,10,10,10,"rx!ack,!(seq)", 1, 4, 0);
-	trans[1][12]	= settr(29,0,13,1,0,"break", 0, 2, 0);
-	trans[1][13]	= settr(30,0,0,11,11,"-end-", 0, 3500, 0);
+	trans[1][13]	= settr(32,0,12,1,0,".(goto)", 0, 2, 0);
+	T = trans[1][12] = settr(31,0,0,0,0,"DO", 0, 2, 0);
+	T = T->nxt	= settr(31,0,1,0,0,"DO", 0, 2, 0);
+	T = T->nxt	= settr(31,0,3,0,0,"DO", 0, 2, 0);
+	    T->nxt	= settr(31,0,8,0,0,"DO", 0, 2, 0);
+	trans[1][1]	= settr(20,0,2,10,10,"tx?data,num", 1, 503, 0);
+	trans[1][2]	= settr(21,0,12,1,0,"(1)", 0, 2, 0);
+	trans[1][3]	= settr(22,0,4,11,11,"tx?data,eval(seq)", 1, 503, 0);
+	trans[1][4]	= settr(23,0,5,12,0,"printf('receptor recebeu data %d\\n',seq)", 0, 2, 0);
+	trans[1][5]	= settr(24,0,6,13,13,"rx!ack,seq", 1, 4, 0);
+	trans[1][6]	= settr(25,0,7,14,14,"guarda_mseq_RX = seq", 1, 2, 0);
+	trans[1][7]	= settr(26,0,12,15,15,"seq = !(seq)", 0, 2, 0);
+	trans[1][8]	= settr(27,0,9,16,16,"tx?data,eval(!(seq))", 1, 503, 0);
+	trans[1][9]	= settr(28,0,10,17,0,"printf('receptor recebeu data duplicado %d\\n',!(seq))", 0, 2, 0);
+	trans[1][10]	= settr(29,0,11,18,18,"rx!ack,!(seq)", 1, 4, 0);
+	trans[1][11]	= settr(30,0,12,19,19,"guarda_mseq_RX = seq", 1, 2, 0);
+	trans[1][14]	= settr(33,0,15,1,0,"break", 0, 2, 0);
+	trans[1][15]	= settr(34,0,0,20,20,"-end-", 0, 3500, 0);
 
 	/* proctype 0: transmissor */
 
-	trans[0] = (Trans **) emalloc(19*sizeof(Trans *));
+	trans[0] = (Trans **) emalloc(21*sizeof(Trans *));
 
-	trans[0][1]	= settr(0,0,2,12,12,"tx!data,seq", 1, 3, 0);
-	trans[0][2]	= settr(1,0,15,13,0,"printf('transmissor transmitiu msg %d\\n',seq)", 0, 2, 0);
-	trans[0][16]	= settr(15,0,15,1,0,".(goto)", 0, 2, 0);
-	T = trans[0][15] = settr(14,0,0,0,0,"DO", 0, 2, 0);
-	T = T->nxt	= settr(14,0,3,0,0,"DO", 0, 2, 0);
-	T = T->nxt	= settr(14,0,5,0,0,"DO", 0, 2, 0);
-	T = T->nxt	= settr(14,0,9,0,0,"DO", 0, 2, 0);
-	    T->nxt	= settr(14,0,12,0,0,"DO", 0, 2, 0);
-	trans[0][3]	= settr(2,0,4,14,14,"rx?ack,num", 1, 504, 0);
-	trans[0][4]	= settr(3,0,15,1,0,"(1)", 0, 2, 0);
-	trans[0][5]	= settr(4,0,6,15,15,"rx?ack,eval(seq)", 1, 504, 0);
-	trans[0][6]	= settr(5,0,1,16,16,"printf('transmissor recebeu ack %d\\n',seq)", 0, 2, 0); /* m: 7 -> 0,1 */
-	reached0[7] = 1;
-	trans[0][7]	= settr(0,0,0,0,0,"seq = !(seq)",0,0,0);
-	trans[0][8]	= settr(7,0,1,1,0,"goto ocioso", 0, 2, 0);
-	trans[0][9]	= settr(8,0,10,17,17,"rx?ack,eval(!(seq))", 1, 504, 0);
-	trans[0][10]	= settr(9,0,11,18,0,"printf('transmissor recebeu ack incorreto: %d\\n',!(seq))", 0, 2, 0);
-	trans[0][11]	= settr(10,0,15,1,0,"(1)", 0, 2, 0);
-	trans[0][12]	= settr(11,0,13,19,0,"(timeout)", 1, 3000, 0);
-	trans[0][13]	= settr(12,0,14,20,0,"printf('retransmitiu data %d\\n',seq)", 0, 2, 0);
-	trans[0][14]	= settr(13,0,15,21,21,"tx!data,seq", 1, 3, 0);
-	trans[0][17]	= settr(16,0,18,1,0,"break", 0, 2, 0);
-	trans[0][18]	= settr(17,0,0,22,22,"-end-", 0, 3500, 0);
+	trans[0][1]	= settr(0,0,2,21,21,"tx!data,seq", 1, 3, 0);
+	trans[0][2]	= settr(1,0,3,22,22,"guarda_nseq_TX = seq", 1, 2, 0);
+	trans[0][3]	= settr(2,0,17,23,0,"printf('transmissor transmitiu msg %d\\n',seq)", 1, 2, 0);
+	trans[0][18]	= settr(17,0,17,1,0,".(goto)", 1, 2, 0);
+	T = trans[0][17] = settr(16,0,0,0,0,"DO", 1, 2, 0);
+	T = T->nxt	= settr(16,0,4,0,0,"DO", 0, 2, 0);
+	T = T->nxt	= settr(16,0,6,0,0,"DO", 0, 2, 0);
+	T = T->nxt	= settr(16,0,11,0,0,"DO", 0, 2, 0);
+	    T->nxt	= settr(16,0,14,0,0,"DO", 0, 2, 0);
+	trans[0][4]	= settr(3,0,5,24,24,"rx?ack,num", 1, 504, 0);
+	trans[0][5]	= settr(4,0,17,1,0,"(1)", 1, 2, 0);
+	trans[0][6]	= settr(5,0,7,25,25,"rx?ack,eval(seq)", 1, 504, 0);
+	trans[0][7]	= settr(6,0,8,26,0,"printf('transmissor recebeu ack %d\\n',seq)", 0, 2, 0);
+	trans[0][8]	= settr(7,0,9,27,27,"guarda_nseq_TX = seq", 1, 2, 0);
+	trans[0][9]	= settr(8,0,1,28,28,"seq = !(seq)", 1, 2, 0);
+	trans[0][10]	= settr(9,0,1,1,0,"goto ocioso", 1, 2, 0);
+	trans[0][11]	= settr(10,0,12,29,29,"rx?ack,eval(!(seq))", 1, 504, 0);
+	trans[0][12]	= settr(11,0,13,30,0,"printf('transmissor recebeu ack incorreto: %d\\n',!(seq))", 0, 2, 0);
+	trans[0][13]	= settr(12,0,17,1,0,"(1)", 1, 2, 0);
+	trans[0][14]	= settr(13,0,15,31,0,"(timeout)", 1, 3000, 0);
+	trans[0][15]	= settr(14,0,16,32,0,"printf('retransmitiu data %d\\n',seq)", 0, 2, 0);
+	trans[0][16]	= settr(15,0,17,33,33,"tx!data,seq", 1, 3, 0);
+	trans[0][19]	= settr(18,0,20,1,0,"break", 0, 2, 0);
+	trans[0][20]	= settr(19,0,0,34,34,"-end-", 0, 3500, 0);
 	/* np_ demon: */
 	trans[_NP_] = (Trans **) emalloc(3*sizeof(Trans *));
 	T = trans[_NP_][0] = settr(9997,0,1,_T5,0,"(np_)", 1,2,0);

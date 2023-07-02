@@ -1,0 +1,26 @@
+never recv {    /* !([] ((! ((transmissor@ocioso))) || (<> ((guarda_nseq_TX==guarda_mseq_RX))))) */
+T0_init:
+	do
+	:: (! ((! ((transmissor@ocioso)))) && ! (((guarda_nseq_TX==guarda_mseq_RX)))) -> goto accept_S4
+	:: (1) -> goto T0_init
+	od;
+accept_S4:
+	do
+	:: (! (((guarda_nseq_TX==guarda_mseq_RX)))) -> goto accept_S4
+	od;
+}
+never confirm {    /* !((<> (((transmissor@espera)) && ((guarda_nseq_TX==guarda_mseq_RX)))) && ((transmissor@ocioso))) */
+accept_init:
+T0_init:
+	do
+	:: (! ((((transmissor@espera)) && ((guarda_nseq_TX==guarda_mseq_RX))))) -> goto accept_S2
+	:: atomic { (! (((transmissor@ocioso)))) -> assert(!(! (((transmissor@ocioso))))) }
+	od;
+accept_S2:
+T0_S2:
+	do
+	:: (! ((((transmissor@espera)) && ((guarda_nseq_TX==guarda_mseq_RX))))) -> goto accept_S2
+	od;
+accept_all:
+	skip
+}

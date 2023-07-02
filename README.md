@@ -16,7 +16,7 @@
     gcc -o pan pan.c
 
     # Executa o verificador
-    ./pan
+    ./pan -a
 ```
 ### Verificação de Protocolos
 
@@ -38,4 +38,5 @@ Para fins de verificação de propriedades, PROMELA/SPIN definem dois tipos de r
 **Referências**
 
 capítulo 4 do livro The SPIN Model Checker
+
 capítulo 6 do livro Design and Validation of Computer Protocols.
