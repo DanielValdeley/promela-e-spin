@@ -10,7 +10,7 @@
 
 ```shell
     # opção -a: usada para gerar um verificador, que estará no arquivo pan.c
-    ./spin -a arquivo.pml
+    ./spin -a pe.pml
 
     # Compila o verificador, que será o programa "pan"
     gcc -o pan pan.c
