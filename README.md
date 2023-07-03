@@ -1,5 +1,11 @@
 # promela-e-spin
 
+### Entrega
+
+[arq](/pe.pml) - Pare-e-espere
+
+[enq](/enq.pml) - Enquadramento
+
 ### Para executar usando o spin
 
 ```shell

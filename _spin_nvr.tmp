@@ -1,26 +1,19 @@
-never recv {    /* !([] ((! ((transmissor@ocioso))) || (<> ((guarda_nseq_TX==guarda_mseq_RX))))) */
-T0_init:
-	do
-	:: (! ((! ((transmissor@ocioso)))) && ! (((guarda_nseq_TX==guarda_mseq_RX)))) -> goto accept_S4
-	:: (1) -> goto T0_init
-	od;
-accept_S4:
-	do
-	:: (! (((guarda_nseq_TX==guarda_mseq_RX)))) -> goto accept_S4
-	od;
-}
-never confirm {    /* !((<> (((transmissor@espera)) && ((guarda_nseq_TX==guarda_mseq_RX)))) && ((transmissor@ocioso))) */
+never rec {    /* !((<> ((! ((fram_rx@estado_esc))) || ((fram_rx@estado_rx)))) || (<> ((! ((fram_rx@estado_ocioso))) || ((fram_rx@estado_rx))))) */
 accept_init:
 T0_init:
 	do
-	:: (! ((((transmissor@espera)) && ((guarda_nseq_TX==guarda_mseq_RX))))) -> goto accept_S2
-	:: atomic { (! (((transmissor@ocioso)))) -> assert(!(! (((transmissor@ocioso))))) }
+	:: (! (((! ((fram_rx@estado_esc))) || ((fram_rx@estado_rx)))) && ! (((! ((fram_rx@estado_ocioso))) || ((fram_rx@estado_rx))))) -> goto T0_init
 	od;
-accept_S2:
-T0_S2:
+}
+never desc {    /* !((! ([] (((fram_rx@estado_rx)) && ((i>max_size))))) || ((fram_rx@estado_ocioso))) */
+accept_init:
+T0_init:
 	do
-	:: (! ((((transmissor@espera)) && ((guarda_nseq_TX==guarda_mseq_RX))))) -> goto accept_S2
+	:: (! (((fram_rx@estado_ocioso))) && (((fram_rx@estado_rx)) && ((i>max_size)))) -> goto accept_S3
 	od;
-accept_all:
-	skip
+accept_S3:
+T0_S3:
+	do
+	:: ((((fram_rx@estado_rx)) && ((i>max_size)))) -> goto accept_S3
+	od;
 }

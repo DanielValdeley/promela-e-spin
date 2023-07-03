@@ -63,3 +63,11 @@ ltl recv {[](transmissor@ocioso -> <>(guarda_nseq_TX == guarda_mseq_RX))}
 
 // Uma nova mensagem é transmitida somente se a mensagem anterior for confirmada
 ltl confirm {<>(transmissor@espera && guarda_nseq_TX == guarda_mseq_RX) && transmissor@ocioso}
+
+// Resultado e conclusão recv
+// recv: toda vez que o transmissor estiver no estado ocioso faz envio de msg, que em algum momento futuro sera recebida.
+// isso implica verificar se o n de seq de TX guardado for igual o m de seq de RX são iguais em algum momento futuro.
+
+// Resultado e conclusão confirm
+// confirm: frequentemente uma msg é transmitida assim que a msg anterior for confirmada, para isso o transmissor está no estado espera
+// e se o n de seq de TX guardado for igual o m de seq de RX então a msg anterior é confirmada e retorna para o estado ocioso onde irá transmitir uma nova msg.
