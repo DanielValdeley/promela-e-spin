@@ -22,57 +22,69 @@ settable(void)
 {	Trans *T;
 	Trans *settr(int, int, int, int, int, char *, int, int, int);
 
-	trans = (Trans ***) emalloc(5*sizeof(Trans **));
+	trans = (Trans ***) emalloc(6*sizeof(Trans **));
 
-	/* proctype 3: desc */
+	/* proctype 4: desc */
 
-	trans[3] = (Trans **) emalloc(12*sizeof(Trans *));
+	trans[4] = (Trans **) emalloc(12*sizeof(Trans *));
+
+	trans[4][4]	= settr(87,0,3,1,0,".(goto)", 0, 2, 0);
+	T = trans[4][3] = settr(86,0,0,0,0,"DO", 0, 2, 0);
+	    T->nxt	= settr(86,0,1,0,0,"DO", 0, 2, 0);
+	trans[4][1]	= settr(84,0,8,3,0,"((!((fram_rx._p==estado_ocioso))&&((fram_rx._p==estado_rx)&&(i>max_size))))", 1, 2, 0);
+	trans[4][2]	= settr(85,0,8,1,0,"goto accept_S3", 0, 2, 0);
+	trans[4][5]	= settr(88,0,8,1,0,"break", 0, 2, 0);
+	trans[4][9]	= settr(92,0,8,1,0,".(goto)", 0, 2, 0);
+	T = trans[4][8] = settr(91,0,0,0,0,"DO", 0, 2, 0);
+	    T->nxt	= settr(91,0,6,0,0,"DO", 0, 2, 0);
+	trans[4][6]	= settr(89,0,8,4,0,"(((fram_rx._p==estado_rx)&&(i>max_size)))", 1, 2, 0);
+	trans[4][7]	= settr(90,0,8,1,0,"goto accept_S3", 0, 2, 0);
+	trans[4][10]	= settr(93,0,11,1,0,"break", 0, 2, 0);
+	trans[4][11]	= settr(94,0,0,5,5,"-end-", 0, 3500, 0);
+
+	/* proctype 3: sinc2 */
+
+	trans[3] = (Trans **) emalloc(7*sizeof(Trans *));
 
 	trans[3][4]	= settr(81,0,3,1,0,".(goto)", 0, 2, 0);
 	T = trans[3][3] = settr(80,0,0,0,0,"DO", 0, 2, 0);
 	    T->nxt	= settr(80,0,1,0,0,"DO", 0, 2, 0);
-	trans[3][1]	= settr(78,0,8,3,0,"((!((fram_rx._p==estado_ocioso))&&((fram_rx._p==estado_rx)&&(i>max_size))))", 1, 2, 0);
-	trans[3][2]	= settr(79,0,8,1,0,"goto accept_S3", 0, 2, 0);
-	trans[3][5]	= settr(82,0,8,1,0,"break", 0, 2, 0);
-	trans[3][9]	= settr(86,0,8,1,0,".(goto)", 0, 2, 0);
-	T = trans[3][8] = settr(85,0,0,0,0,"DO", 0, 2, 0);
-	    T->nxt	= settr(85,0,6,0,0,"DO", 0, 2, 0);
-	trans[3][6]	= settr(83,0,8,4,0,"(((fram_rx._p==estado_rx)&&(i>max_size)))", 1, 2, 0);
-	trans[3][7]	= settr(84,0,8,1,0,"goto accept_S3", 0, 2, 0);
-	trans[3][10]	= settr(87,0,11,1,0,"break", 0, 2, 0);
-	trans[3][11]	= settr(88,0,0,5,5,"-end-", 0, 3500, 0);
+	trans[3][1]	= settr(78,0,3,6,0,"(!((error==0)))", 1, 2, 0);
+	trans[3][2]	= settr(79,0,3,1,0,"goto T0_init", 0, 2, 0);
+	trans[3][5]	= settr(82,0,6,1,0,"break", 0, 2, 0);
+	trans[3][6]	= settr(83,0,0,7,7,"-end-", 0, 3500, 0);
 
-	/* proctype 2: sinc */
+	/* proctype 2: sinc1 */
 
 	trans[2] = (Trans **) emalloc(7*sizeof(Trans *));
 
 	trans[2][4]	= settr(75,0,3,1,0,".(goto)", 0, 2, 0);
 	T = trans[2][3] = settr(74,0,0,0,0,"DO", 0, 2, 0);
 	    T->nxt	= settr(74,0,1,0,0,"DO", 0, 2, 0);
-	trans[2][1]	= settr(72,0,3,6,0,"(!((error==0)))", 1, 2, 0);
+	trans[2][1]	= settr(72,0,3,8,0,"((!((!((fram_rx._p==estado_esc))||(fram_rx._p==estado_rx)))&&!((!((fram_rx._p==estado_ocioso))||(fram_rx._p==estado_rx)))))", 1, 2, 0);
 	trans[2][2]	= settr(73,0,3,1,0,"goto T0_init", 0, 2, 0);
 	trans[2][5]	= settr(76,0,6,1,0,"break", 0, 2, 0);
-	trans[2][6]	= settr(77,0,0,7,7,"-end-", 0, 3500, 0);
+	trans[2][6]	= settr(77,0,0,9,9,"-end-", 0, 3500, 0);
 
 	/* proctype 1: fram_rx */
 
 	trans[1] = (Trans **) emalloc(50*sizeof(Trans *));
 
-	trans[1][1]	= settr(23,0,2,8,8,"cnt = 0", 1, 2, 0);
-	trans[1][2]	= settr(24,0,11,9,9,"i = 0", 1, 2, 0);
+	trans[1][1]	= settr(23,0,2,10,10,"cnt = 0", 1, 2, 0);
+	trans[1][2]	= settr(24,0,11,11,11,"i = 0", 1, 2, 0);
 	trans[1][12]	= settr(34,0,11,1,0,".(goto)", 0, 2, 0);
 	T = trans[1][11] = settr(33,0,0,0,0,"DO", 0, 2, 0);
 	T = T->nxt	= settr(33,0,3,0,0,"DO", 0, 2, 0);
 	T = T->nxt	= settr(33,0,5,0,0,"DO", 0, 2, 0);
 	T = T->nxt	= settr(33,0,7,0,0,"DO", 0, 2, 0);
 	    T->nxt	= settr(33,0,9,0,0,"DO", 0, 2, 0);
-	trans[1][3]	= settr(25,0,31,10,10,"tx?flag", 1, 503, 0);
+	trans[1][3]	= settr(25,0,31,12,12,"tx?flag", 1, 503, 0);
 	trans[1][4]	= settr(26,0,31,1,0,"goto estado_rx", 1, 2, 0);
-	trans[1][5]	= settr(27,0,6,11,11,"tx?data", 1, 503, 0);
+	trans[1][5]	= settr(27,0,6,13,13,"tx?data", 1, 503, 0);
 	trans[1][6]	= settr(28,0,11,1,0,"(1)", 0, 2, 0);
-	trans[1][7]	= settr(29,0,8,12,12,"tx?esc", 1, 503, 0);
+	trans[1][7]	= settr(29,0,8,14,14,"tx?esc", 1, 503, 0);
 	trans[1][8]	= settr(30,0,11,1,0,"(1)", 0, 2, 0);
-	trans[1][9]	= settr(31,0,10,13,13,"tx?octeto", 1, 503, 0);
+	trans[1][9]	= settr(31,0,10,15,15,"tx?octeto", 1, 503, 0);
 	trans[1][10]	= settr(32,0,11,1,0,"(1)", 0, 2, 0);
 	trans[1][13]	= settr(35,0,31,1,0,"break", 1, 2, 0);
 	trans[1][32]	= settr(54,0,31,1,0,".(goto)", 1, 2, 0);
@@ -82,79 +94,79 @@ settable(void)
 	T = T->nxt	= settr(53,0,20,0,0,"DO", 0, 2, 0);
 	T = T->nxt	= settr(53,0,27,0,0,"DO", 0, 2, 0);
 	    T->nxt	= settr(53,0,29,0,0,"DO", 0, 2, 0);
-	trans[1][14]	= settr(36,0,15,14,14,"tx?data", 1, 503, 0);
-	trans[1][15]	= settr(37,0,16,15,15,"cnt = (cnt+1)", 0, 2, 0);
-	trans[1][16]	= settr(38,0,17,16,16,"error = 0", 1, 2, 0);
-	trans[1][17]	= settr(39,0,31,17,17,"i = (i+1)", 1, 2, 0);
-	trans[1][18]	= settr(40,0,46,18,18,"tx?esc", 1, 503, 0);
-	trans[1][19]	= settr(41,0,46,1,0,"goto estado_esc", 0, 2, 0);
-	trans[1][20]	= settr(42,0,25,19,19,"tx?flag", 1, 503, 0);
+	trans[1][14]	= settr(36,0,15,16,16,"tx?data", 1, 503, 0);
+	trans[1][15]	= settr(37,0,16,17,17,"cnt = (cnt+1)", 0, 2, 0);
+	trans[1][16]	= settr(38,0,17,18,18,"error = 0", 1, 2, 0);
+	trans[1][17]	= settr(39,0,31,19,19,"i = (i+1)", 1, 2, 0);
+	trans[1][18]	= settr(40,0,46,20,20,"tx?esc", 1, 503, 0);
+	trans[1][19]	= settr(41,0,46,1,0,"goto estado_esc", 1, 2, 0);
+	trans[1][20]	= settr(42,0,25,21,21,"tx?flag", 1, 503, 0);
 	T = trans[1][25] = settr(47,0,0,0,0,"IF", 0, 2, 0);
 	T = T->nxt	= settr(47,0,21,0,0,"IF", 0, 2, 0);
 	    T->nxt	= settr(47,0,23,0,0,"IF", 0, 2, 0);
-	trans[1][21]	= settr(43,0,22,20,0,"((cnt==0))", 0, 2, 0);
+	trans[1][21]	= settr(43,0,22,22,0,"((cnt==0))", 0, 2, 0);
 	trans[1][22]	= settr(44,0,31,1,0,"(1)", 1, 2, 0);
 	trans[1][26]	= settr(48,0,31,1,0,".(goto)", 1, 2, 0);
 	trans[1][23]	= settr(45,0,1,2,0,"else", 1, 2, 0);
 	trans[1][24]	= settr(46,0,1,1,0,"goto estado_ocioso", 1, 2, 0);
-	trans[1][27]	= settr(49,0,1,21,21,"((cnt>max_size))", 1, 2, 0);
+	trans[1][27]	= settr(49,0,1,23,23,"((cnt>max_size))", 1, 2, 0);
 	trans[1][28]	= settr(50,0,1,1,0,"goto estado_ocioso", 1, 2, 0);
-	trans[1][29]	= settr(51,0,30,22,22,"tx?octeto", 1, 503, 0);
+	trans[1][29]	= settr(51,0,30,24,24,"tx?octeto", 1, 503, 0);
 	trans[1][30]	= settr(52,0,31,1,0,"(1)", 1, 2, 0);
-	trans[1][33]	= settr(55,0,46,1,0,"break", 0, 2, 0);
-	trans[1][47]	= settr(69,0,46,1,0,".(goto)", 0, 2, 0);
-	T = trans[1][46] = settr(68,0,0,0,0,"DO", 0, 2, 0);
+	trans[1][33]	= settr(55,0,46,1,0,"break", 1, 2, 0);
+	trans[1][47]	= settr(69,0,46,1,0,".(goto)", 1, 2, 0);
+	T = trans[1][46] = settr(68,0,0,0,0,"DO", 1, 2, 0);
 	T = T->nxt	= settr(68,0,34,0,0,"DO", 0, 2, 0);
 	T = T->nxt	= settr(68,0,38,0,0,"DO", 0, 2, 0);
 	T = T->nxt	= settr(68,0,41,0,0,"DO", 0, 2, 0);
 	    T->nxt	= settr(68,0,44,0,0,"DO", 0, 2, 0);
-	trans[1][34]	= settr(56,0,35,23,23,"tx?data", 1, 503, 0);
-	trans[1][35]	= settr(57,0,36,24,24,"cnt = (cnt+1)", 0, 2, 0);
-	trans[1][36]	= settr(58,0,31,25,25,"i = (i+1)", 1, 2, 0);
+	trans[1][34]	= settr(56,0,35,25,25,"tx?data", 1, 503, 0);
+	trans[1][35]	= settr(57,0,36,26,26,"cnt = (cnt+1)", 0, 2, 0);
+	trans[1][36]	= settr(58,0,31,27,27,"i = (i+1)", 1, 2, 0);
 	trans[1][37]	= settr(59,0,31,1,0,"goto estado_rx", 1, 2, 0);
-	trans[1][38]	= settr(60,0,39,26,26,"tx?flag", 1, 503, 0);
-	trans[1][39]	= settr(61,0,1,27,27,"error = 1", 1, 2, 0);
+	trans[1][38]	= settr(60,0,39,28,28,"tx?flag", 1, 503, 0);
+	trans[1][39]	= settr(61,0,1,29,29,"error = 1", 1, 2, 0);
 	trans[1][40]	= settr(62,0,1,1,0,"goto estado_ocioso", 1, 2, 0);
-	trans[1][41]	= settr(63,0,42,28,28,"tx?esc", 1, 503, 0);
-	trans[1][42]	= settr(64,0,1,29,29,"error = 1", 1, 2, 0);
+	trans[1][41]	= settr(63,0,42,30,30,"tx?esc", 1, 503, 0);
+	trans[1][42]	= settr(64,0,1,31,31,"error = 1", 1, 2, 0);
 	trans[1][43]	= settr(65,0,1,1,0,"goto estado_ocioso", 1, 2, 0);
-	trans[1][44]	= settr(66,0,45,30,30,"tx?octeto", 1, 503, 0);
-	trans[1][45]	= settr(67,0,46,1,0,"(1)", 0, 2, 0);
+	trans[1][44]	= settr(66,0,45,32,32,"tx?octeto", 1, 503, 0);
+	trans[1][45]	= settr(67,0,46,1,0,"(1)", 1, 2, 0);
 	trans[1][48]	= settr(70,0,49,1,0,"break", 0, 2, 0);
-	trans[1][49]	= settr(71,0,0,31,31,"-end-", 0, 3500, 0);
+	trans[1][49]	= settr(71,0,0,33,33,"-end-", 0, 3500, 0);
 
 	/* proctype 0: fram_tx */
 
 	trans[0] = (Trans **) emalloc(24*sizeof(Trans *));
 
-	trans[0][1]	= settr(0,0,2,32,32,"tx!flag", 1, 3, 0);
-	trans[0][2]	= settr(1,0,3,33,33,"cnt = 0", 0, 2, 0);
-	trans[0][3]	= settr(2,0,20,34,34,"i = 0", 1, 2, 0);
+	trans[0][1]	= settr(0,0,2,34,34,"tx!flag", 1, 3, 0);
+	trans[0][2]	= settr(1,0,3,35,35,"cnt = 0", 0, 2, 0);
+	trans[0][3]	= settr(2,0,20,36,36,"i = 0", 1, 2, 0);
 	trans[0][21]	= settr(20,0,20,1,0,".(goto)", 0, 2, 0);
 	T = trans[0][20] = settr(19,0,0,0,0,"DO", 0, 2, 0);
 	T = T->nxt	= settr(19,0,4,0,0,"DO", 0, 2, 0);
 	T = T->nxt	= settr(19,0,14,0,0,"DO", 0, 2, 0);
 	    T->nxt	= settr(19,0,17,0,0,"DO", 0, 2, 0);
-	trans[0][4]	= settr(3,0,12,35,0,"((cnt<max_size))", 1, 2, 0);
+	trans[0][4]	= settr(3,0,12,37,0,"((cnt<max_size))", 1, 2, 0);
 	T = trans[0][12] = settr(11,0,0,0,0,"IF", 0, 2, 0);
 	T = T->nxt	= settr(11,0,5,0,0,"IF", 0, 2, 0);
 	    T->nxt	= settr(11,0,8,0,0,"IF", 0, 2, 0);
-	trans[0][5]	= settr(4,0,6,36,36,"tx!data", 1, 3, 0);
-	trans[0][6]	= settr(5,0,7,37,37,"cnt = (cnt+1)", 0, 2, 0);
-	trans[0][7]	= settr(6,0,20,38,38,"i = (i+1)", 1, 2, 0);
+	trans[0][5]	= settr(4,0,6,38,38,"tx!data", 1, 3, 0);
+	trans[0][6]	= settr(5,0,7,39,39,"cnt = (cnt+1)", 0, 2, 0);
+	trans[0][7]	= settr(6,0,20,40,40,"i = (i+1)", 1, 2, 0);
 	trans[0][13]	= settr(12,0,20,1,0,".(goto)", 0, 2, 0);
-	trans[0][8]	= settr(7,0,9,39,39,"tx!esc", 1, 3, 0);
-	trans[0][9]	= settr(8,0,10,40,40,"tx!data", 1, 3, 0);
-	trans[0][10]	= settr(9,0,11,41,41,"cnt = (cnt+1)", 0, 2, 0);
-	trans[0][11]	= settr(10,0,20,42,42,"i = (i+1)", 1, 2, 0);
-	trans[0][14]	= settr(13,0,15,43,43,"((cnt>0))", 0, 2, 0);
-	trans[0][15]	= settr(14,0,1,44,44,"tx!flag", 1, 3, 0);
+	trans[0][8]	= settr(7,0,9,41,41,"tx!esc", 1, 3, 0);
+	trans[0][9]	= settr(8,0,10,42,42,"tx!data", 1, 3, 0);
+	trans[0][10]	= settr(9,0,11,43,43,"cnt = (cnt+1)", 0, 2, 0);
+	trans[0][11]	= settr(10,0,20,44,44,"i = (i+1)", 1, 2, 0);
+	trans[0][14]	= settr(13,0,15,45,45,"((cnt>0))", 0, 2, 0);
+	trans[0][15]	= settr(14,0,1,46,46,"tx!flag", 1, 3, 0);
 	trans[0][16]	= settr(15,0,1,1,0,"goto inicio", 0, 2, 0);
 	trans[0][17]	= settr(16,0,18,2,0,"else", 0, 2, 0);
-	trans[0][18]	= settr(17,0,1,45,45,"tx!flag", 1, 3, 0);
+	trans[0][18]	= settr(17,0,1,47,47,"tx!flag", 1, 3, 0);
 	trans[0][19]	= settr(18,0,1,1,0,"goto inicio", 0, 2, 0);
 	trans[0][22]	= settr(21,0,23,1,0,"break", 0, 2, 0);
-	trans[0][23]	= settr(22,0,0,46,46,"-end-", 0, 3500, 0);
+	trans[0][23]	= settr(22,0,0,48,48,"-end-", 0, 3500, 0);
 	/* np_ demon: */
 	trans[_NP_] = (Trans **) emalloc(3*sizeof(Trans *));
 	T = trans[_NP_][0] = settr(9997,0,1,_T5,0,"(np_)", 1,2,0);

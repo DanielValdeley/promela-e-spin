@@ -20,7 +20,86 @@
 		_m = 3; goto P999;
 
 		 /* CLAIM desc */
-	case 3: // STATE 1 - _spin_nvr.tmp:11 - [((!((fram_rx._p==estado_ocioso))&&((fram_rx._p==estado_rx)&&(i>max_size))))] (0:0:0 - 1)
+	case 3: // STATE 1 - _spin_nvr.tmp:18 - [((!((fram_rx._p==estado_ocioso))&&((fram_rx._p==estado_rx)&&(i>max_size))))] (0:0:0 - 1)
+		
+#if defined(VERI) && !defined(NP)
+#if NCLAIMS>1
+		{	static int reported1 = 0;
+			if (verbose && !reported1)
+			{	int nn = (int) ((Pclaim *)pptr(0))->_n;
+				printf("depth %ld: Claim %s (%d), state %d (line %d)\n",
+					depth, procname[spin_c_typ[nn]], nn, (int) ((Pclaim *)pptr(0))->_p, src_claim[ (int) ((Pclaim *)pptr(0))->_p ]);
+				reported1 = 1;
+				fflush(stdout);
+		}	}
+#else
+		{	static int reported1 = 0;
+			if (verbose && !reported1)
+			{	printf("depth %d: Claim, state %d (line %d)\n",
+					(int) depth, (int) ((Pclaim *)pptr(0))->_p, src_claim[ (int) ((Pclaim *)pptr(0))->_p ]);
+				reported1 = 1;
+				fflush(stdout);
+		}	}
+#endif
+#endif
+		reached[4][1] = 1;
+		if (!(( !((((int)((P1 *)Pptr(f_pid(1)))->_p)==1))&&((((int)((P1 *)Pptr(f_pid(1)))->_p)==31)&&(now.i>now.max_size)))))
+			continue;
+		_m = 3; goto P999; /* 0 */
+	case 4: // STATE 6 - _spin_nvr.tmp:23 - [(((fram_rx._p==estado_rx)&&(i>max_size)))] (0:0:0 - 1)
+		
+#if defined(VERI) && !defined(NP)
+#if NCLAIMS>1
+		{	static int reported6 = 0;
+			if (verbose && !reported6)
+			{	int nn = (int) ((Pclaim *)pptr(0))->_n;
+				printf("depth %ld: Claim %s (%d), state %d (line %d)\n",
+					depth, procname[spin_c_typ[nn]], nn, (int) ((Pclaim *)pptr(0))->_p, src_claim[ (int) ((Pclaim *)pptr(0))->_p ]);
+				reported6 = 1;
+				fflush(stdout);
+		}	}
+#else
+		{	static int reported6 = 0;
+			if (verbose && !reported6)
+			{	printf("depth %d: Claim, state %d (line %d)\n",
+					(int) depth, (int) ((Pclaim *)pptr(0))->_p, src_claim[ (int) ((Pclaim *)pptr(0))->_p ]);
+				reported6 = 1;
+				fflush(stdout);
+		}	}
+#endif
+#endif
+		reached[4][6] = 1;
+		if (!(((((int)((P1 *)Pptr(f_pid(1)))->_p)==31)&&(now.i>now.max_size))))
+			continue;
+		_m = 3; goto P999; /* 0 */
+	case 5: // STATE 11 - _spin_nvr.tmp:25 - [-end-] (0:0:0 - 1)
+		
+#if defined(VERI) && !defined(NP)
+#if NCLAIMS>1
+		{	static int reported11 = 0;
+			if (verbose && !reported11)
+			{	int nn = (int) ((Pclaim *)pptr(0))->_n;
+				printf("depth %ld: Claim %s (%d), state %d (line %d)\n",
+					depth, procname[spin_c_typ[nn]], nn, (int) ((Pclaim *)pptr(0))->_p, src_claim[ (int) ((Pclaim *)pptr(0))->_p ]);
+				reported11 = 1;
+				fflush(stdout);
+		}	}
+#else
+		{	static int reported11 = 0;
+			if (verbose && !reported11)
+			{	printf("depth %d: Claim, state %d (line %d)\n",
+					(int) depth, (int) ((Pclaim *)pptr(0))->_p, src_claim[ (int) ((Pclaim *)pptr(0))->_p ]);
+				reported11 = 1;
+				fflush(stdout);
+		}	}
+#endif
+#endif
+		reached[4][11] = 1;
+		if (!delproc(1, II)) continue;
+		_m = 3; goto P999; /* 0 */
+
+		 /* CLAIM sinc2 */
+	case 6: // STATE 1 - _spin_nvr.tmp:11 - [(!((error==0)))] (0:0:0 - 1)
 		
 #if defined(VERI) && !defined(NP)
 #if NCLAIMS>1
@@ -43,10 +122,10 @@
 #endif
 #endif
 		reached[3][1] = 1;
-		if (!(( !((((int)((P1 *)Pptr(f_pid(1)))->_p)==1))&&((((int)((P1 *)Pptr(f_pid(1)))->_p)==31)&&(now.i>now.max_size)))))
+		if (!( !((now.error==0))))
 			continue;
 		_m = 3; goto P999; /* 0 */
-	case 4: // STATE 6 - _spin_nvr.tmp:16 - [(((fram_rx._p==estado_rx)&&(i>max_size)))] (0:0:0 - 1)
+	case 7: // STATE 6 - _spin_nvr.tmp:13 - [-end-] (0:0:0 - 1)
 		
 #if defined(VERI) && !defined(NP)
 #if NCLAIMS>1
@@ -69,37 +148,11 @@
 #endif
 #endif
 		reached[3][6] = 1;
-		if (!(((((int)((P1 *)Pptr(f_pid(1)))->_p)==31)&&(now.i>now.max_size))))
-			continue;
-		_m = 3; goto P999; /* 0 */
-	case 5: // STATE 11 - _spin_nvr.tmp:18 - [-end-] (0:0:0 - 1)
-		
-#if defined(VERI) && !defined(NP)
-#if NCLAIMS>1
-		{	static int reported11 = 0;
-			if (verbose && !reported11)
-			{	int nn = (int) ((Pclaim *)pptr(0))->_n;
-				printf("depth %ld: Claim %s (%d), state %d (line %d)\n",
-					depth, procname[spin_c_typ[nn]], nn, (int) ((Pclaim *)pptr(0))->_p, src_claim[ (int) ((Pclaim *)pptr(0))->_p ]);
-				reported11 = 1;
-				fflush(stdout);
-		}	}
-#else
-		{	static int reported11 = 0;
-			if (verbose && !reported11)
-			{	printf("depth %d: Claim, state %d (line %d)\n",
-					(int) depth, (int) ((Pclaim *)pptr(0))->_p, src_claim[ (int) ((Pclaim *)pptr(0))->_p ]);
-				reported11 = 1;
-				fflush(stdout);
-		}	}
-#endif
-#endif
-		reached[3][11] = 1;
 		if (!delproc(1, II)) continue;
 		_m = 3; goto P999; /* 0 */
 
-		 /* CLAIM sinc */
-	case 6: // STATE 1 - _spin_nvr.tmp:4 - [(!((error==0)))] (0:0:0 - 1)
+		 /* CLAIM sinc1 */
+	case 8: // STATE 1 - _spin_nvr.tmp:4 - [((!((!((fram_rx._p==estado_esc))||(fram_rx._p==estado_rx)))&&!((!((fram_rx._p==estado_ocioso))||(fram_rx._p==estado_rx)))))] (0:0:0 - 1)
 		
 #if defined(VERI) && !defined(NP)
 #if NCLAIMS>1
@@ -122,10 +175,10 @@
 #endif
 #endif
 		reached[2][1] = 1;
-		if (!( !((now.error==0))))
+		if (!(( !(( !((((int)((P1 *)Pptr(f_pid(1)))->_p)==46))||(((int)((P1 *)Pptr(f_pid(1)))->_p)==31)))&& !(( !((((int)((P1 *)Pptr(f_pid(1)))->_p)==1))||(((int)((P1 *)Pptr(f_pid(1)))->_p)==31))))))
 			continue;
 		_m = 3; goto P999; /* 0 */
-	case 7: // STATE 6 - _spin_nvr.tmp:6 - [-end-] (0:0:0 - 1)
+	case 9: // STATE 6 - _spin_nvr.tmp:6 - [-end-] (0:0:0 - 1)
 		
 #if defined(VERI) && !defined(NP)
 #if NCLAIMS>1
@@ -152,7 +205,7 @@
 		_m = 3; goto P999; /* 0 */
 
 		 /* PROC fram_rx */
-	case 8: // STATE 1 - enq.pml:42 - [cnt = 0] (0:0:1 - 1)
+	case 10: // STATE 1 - enq.pml:42 - [cnt = 0] (0:0:1 - 1)
 		IfNotBlocked
 		reached[1][1] = 1;
 		(trpt+1)->bup.oval = ((P1 *)_this)->cnt;
@@ -162,7 +215,7 @@
 #endif
 		;
 		_m = 3; goto P999; /* 0 */
-	case 9: // STATE 2 - enq.pml:43 - [i = 0] (0:0:1 - 1)
+	case 11: // STATE 2 - enq.pml:43 - [i = 0] (0:0:1 - 1)
 		IfNotBlocked
 		reached[1][2] = 1;
 		(trpt+1)->bup.oval = now.i;
@@ -172,7 +225,7 @@
 #endif
 		;
 		_m = 3; goto P999; /* 0 */
-	case 10: // STATE 3 - enq.pml:45 - [tx?flag] (0:0:0 - 1)
+	case 12: // STATE 3 - enq.pml:45 - [tx?flag] (0:0:0 - 1)
 		reached[1][3] = 1;
 		if (q_len(now.tx) == 0) continue;
 
@@ -195,7 +248,7 @@
 #endif
 		;
 		_m = 4; goto P999; /* 0 */
-	case 11: // STATE 5 - enq.pml:46 - [tx?data] (0:0:0 - 1)
+	case 13: // STATE 5 - enq.pml:46 - [tx?data] (0:0:0 - 1)
 		reached[1][5] = 1;
 		if (q_len(now.tx) == 0) continue;
 
@@ -218,7 +271,7 @@
 #endif
 		;
 		_m = 4; goto P999; /* 0 */
-	case 12: // STATE 7 - enq.pml:47 - [tx?esc] (0:0:0 - 1)
+	case 14: // STATE 7 - enq.pml:47 - [tx?esc] (0:0:0 - 1)
 		reached[1][7] = 1;
 		if (q_len(now.tx) == 0) continue;
 
@@ -241,7 +294,7 @@
 #endif
 		;
 		_m = 4; goto P999; /* 0 */
-	case 13: // STATE 9 - enq.pml:48 - [tx?octeto] (0:0:2 - 1)
+	case 15: // STATE 9 - enq.pml:48 - [tx?octeto] (0:0:2 - 1)
 		reached[1][9] = 1;
 		if (q_len(now.tx) == 0) continue;
 
@@ -270,7 +323,7 @@
 #endif
 			((P1 *)_this)->octeto = 0;
 		_m = 4; goto P999; /* 0 */
-	case 14: // STATE 14 - enq.pml:54 - [tx?data] (0:0:0 - 1)
+	case 16: // STATE 14 - enq.pml:54 - [tx?data] (0:0:0 - 1)
 		reached[1][14] = 1;
 		if (q_len(now.tx) == 0) continue;
 
@@ -293,7 +346,7 @@
 #endif
 		;
 		_m = 4; goto P999; /* 0 */
-	case 15: // STATE 15 - enq.pml:54 - [cnt = (cnt+1)] (0:0:1 - 1)
+	case 17: // STATE 15 - enq.pml:54 - [cnt = (cnt+1)] (0:0:1 - 1)
 		IfNotBlocked
 		reached[1][15] = 1;
 		(trpt+1)->bup.oval = ((P1 *)_this)->cnt;
@@ -303,7 +356,7 @@
 #endif
 		;
 		_m = 3; goto P999; /* 0 */
-	case 16: // STATE 16 - enq.pml:55 - [error = 0] (0:0:1 - 1)
+	case 18: // STATE 16 - enq.pml:55 - [error = 0] (0:0:1 - 1)
 		IfNotBlocked
 		reached[1][16] = 1;
 		(trpt+1)->bup.oval = now.error;
@@ -313,7 +366,7 @@
 #endif
 		;
 		_m = 3; goto P999; /* 0 */
-	case 17: // STATE 17 - enq.pml:56 - [i = (i+1)] (0:0:1 - 1)
+	case 19: // STATE 17 - enq.pml:56 - [i = (i+1)] (0:0:1 - 1)
 		IfNotBlocked
 		reached[1][17] = 1;
 		(trpt+1)->bup.oval = now.i;
@@ -323,7 +376,7 @@
 #endif
 		;
 		_m = 3; goto P999; /* 0 */
-	case 18: // STATE 18 - enq.pml:57 - [tx?esc] (0:0:0 - 1)
+	case 20: // STATE 18 - enq.pml:57 - [tx?esc] (0:0:0 - 1)
 		reached[1][18] = 1;
 		if (q_len(now.tx) == 0) continue;
 
@@ -346,7 +399,7 @@
 #endif
 		;
 		_m = 4; goto P999; /* 0 */
-	case 19: // STATE 20 - enq.pml:58 - [tx?flag] (0:0:0 - 1)
+	case 21: // STATE 20 - enq.pml:58 - [tx?flag] (0:0:0 - 1)
 		reached[1][20] = 1;
 		if (q_len(now.tx) == 0) continue;
 
@@ -369,13 +422,13 @@
 #endif
 		;
 		_m = 4; goto P999; /* 0 */
-	case 20: // STATE 21 - enq.pml:60 - [((cnt==0))] (0:0:0 - 1)
+	case 22: // STATE 21 - enq.pml:60 - [((cnt==0))] (0:0:0 - 1)
 		IfNotBlocked
 		reached[1][21] = 1;
 		if (!((((P1 *)_this)->cnt==0)))
 			continue;
 		_m = 3; goto P999; /* 0 */
-	case 21: // STATE 27 - enq.pml:63 - [((cnt>max_size))] (0:0:1 - 1)
+	case 23: // STATE 27 - enq.pml:63 - [((cnt>max_size))] (0:0:1 - 1)
 		IfNotBlocked
 		reached[1][27] = 1;
 		if (!((((P1 *)_this)->cnt>now.max_size)))
@@ -387,7 +440,7 @@
 #endif
 			((P1 *)_this)->cnt = 0;
 		_m = 3; goto P999; /* 0 */
-	case 22: // STATE 29 - enq.pml:64 - [tx?octeto] (0:0:2 - 1)
+	case 24: // STATE 29 - enq.pml:64 - [tx?octeto] (0:0:2 - 1)
 		reached[1][29] = 1;
 		if (q_len(now.tx) == 0) continue;
 
@@ -416,7 +469,7 @@
 #endif
 			((P1 *)_this)->octeto = 0;
 		_m = 4; goto P999; /* 0 */
-	case 23: // STATE 34 - enq.pml:69 - [tx?data] (0:0:0 - 1)
+	case 25: // STATE 34 - enq.pml:69 - [tx?data] (0:0:0 - 1)
 		reached[1][34] = 1;
 		if (q_len(now.tx) == 0) continue;
 
@@ -439,7 +492,7 @@
 #endif
 		;
 		_m = 4; goto P999; /* 0 */
-	case 24: // STATE 35 - enq.pml:70 - [cnt = (cnt+1)] (0:0:1 - 1)
+	case 26: // STATE 35 - enq.pml:70 - [cnt = (cnt+1)] (0:0:1 - 1)
 		IfNotBlocked
 		reached[1][35] = 1;
 		(trpt+1)->bup.oval = ((P1 *)_this)->cnt;
@@ -449,7 +502,7 @@
 #endif
 		;
 		_m = 3; goto P999; /* 0 */
-	case 25: // STATE 36 - enq.pml:71 - [i = (i+1)] (0:0:1 - 1)
+	case 27: // STATE 36 - enq.pml:71 - [i = (i+1)] (0:0:1 - 1)
 		IfNotBlocked
 		reached[1][36] = 1;
 		(trpt+1)->bup.oval = now.i;
@@ -459,7 +512,7 @@
 #endif
 		;
 		_m = 3; goto P999; /* 0 */
-	case 26: // STATE 38 - enq.pml:73 - [tx?flag] (0:0:0 - 1)
+	case 28: // STATE 38 - enq.pml:73 - [tx?flag] (0:0:0 - 1)
 		reached[1][38] = 1;
 		if (q_len(now.tx) == 0) continue;
 
@@ -482,7 +535,7 @@
 #endif
 		;
 		_m = 4; goto P999; /* 0 */
-	case 27: // STATE 39 - enq.pml:74 - [error = 1] (0:0:1 - 1)
+	case 29: // STATE 39 - enq.pml:74 - [error = 1] (0:0:1 - 1)
 		IfNotBlocked
 		reached[1][39] = 1;
 		(trpt+1)->bup.oval = now.error;
@@ -492,7 +545,7 @@
 #endif
 		;
 		_m = 3; goto P999; /* 0 */
-	case 28: // STATE 41 - enq.pml:76 - [tx?esc] (0:0:0 - 1)
+	case 30: // STATE 41 - enq.pml:76 - [tx?esc] (0:0:0 - 1)
 		reached[1][41] = 1;
 		if (q_len(now.tx) == 0) continue;
 
@@ -515,7 +568,7 @@
 #endif
 		;
 		_m = 4; goto P999; /* 0 */
-	case 29: // STATE 42 - enq.pml:77 - [error = 1] (0:0:1 - 1)
+	case 31: // STATE 42 - enq.pml:77 - [error = 1] (0:0:1 - 1)
 		IfNotBlocked
 		reached[1][42] = 1;
 		(trpt+1)->bup.oval = now.error;
@@ -525,7 +578,7 @@
 #endif
 		;
 		_m = 3; goto P999; /* 0 */
-	case 30: // STATE 44 - enq.pml:79 - [tx?octeto] (0:0:2 - 1)
+	case 32: // STATE 44 - enq.pml:79 - [tx?octeto] (0:0:2 - 1)
 		reached[1][44] = 1;
 		if (q_len(now.tx) == 0) continue;
 
@@ -554,14 +607,14 @@
 #endif
 			((P1 *)_this)->octeto = 0;
 		_m = 4; goto P999; /* 0 */
-	case 31: // STATE 49 - enq.pml:81 - [-end-] (0:0:0 - 1)
+	case 33: // STATE 49 - enq.pml:81 - [-end-] (0:0:0 - 1)
 		IfNotBlocked
 		reached[1][49] = 1;
 		if (!delproc(1, II)) continue;
 		_m = 3; goto P999; /* 0 */
 
 		 /* PROC fram_tx */
-	case 32: // STATE 1 - enq.pml:13 - [tx!flag] (0:0:0 - 1)
+	case 34: // STATE 1 - enq.pml:13 - [tx!flag] (0:0:0 - 1)
 		IfNotBlocked
 		reached[0][1] = 1;
 		if (q_full(now.tx))
@@ -575,7 +628,7 @@
 		
 		qsend(now.tx, 0, 3, 1);
 		_m = 2; goto P999; /* 0 */
-	case 33: // STATE 2 - enq.pml:14 - [cnt = 0] (0:0:1 - 1)
+	case 35: // STATE 2 - enq.pml:14 - [cnt = 0] (0:0:1 - 1)
 		IfNotBlocked
 		reached[0][2] = 1;
 		(trpt+1)->bup.oval = ((P0 *)_this)->cnt;
@@ -585,7 +638,7 @@
 #endif
 		;
 		_m = 3; goto P999; /* 0 */
-	case 34: // STATE 3 - enq.pml:15 - [i = 0] (0:0:1 - 1)
+	case 36: // STATE 3 - enq.pml:15 - [i = 0] (0:0:1 - 1)
 		IfNotBlocked
 		reached[0][3] = 1;
 		(trpt+1)->bup.oval = now.i;
@@ -595,13 +648,13 @@
 #endif
 		;
 		_m = 3; goto P999; /* 0 */
-	case 35: // STATE 4 - enq.pml:18 - [((cnt<max_size))] (0:0:0 - 1)
+	case 37: // STATE 4 - enq.pml:18 - [((cnt<max_size))] (0:0:0 - 1)
 		IfNotBlocked
 		reached[0][4] = 1;
 		if (!((((P0 *)_this)->cnt<now.max_size)))
 			continue;
 		_m = 3; goto P999; /* 0 */
-	case 36: // STATE 5 - enq.pml:20 - [tx!data] (0:0:0 - 1)
+	case 38: // STATE 5 - enq.pml:20 - [tx!data] (0:0:0 - 1)
 		IfNotBlocked
 		reached[0][5] = 1;
 		if (q_full(now.tx))
@@ -615,7 +668,7 @@
 		
 		qsend(now.tx, 0, 1, 1);
 		_m = 2; goto P999; /* 0 */
-	case 37: // STATE 6 - enq.pml:20 - [cnt = (cnt+1)] (0:0:1 - 1)
+	case 39: // STATE 6 - enq.pml:20 - [cnt = (cnt+1)] (0:0:1 - 1)
 		IfNotBlocked
 		reached[0][6] = 1;
 		(trpt+1)->bup.oval = ((P0 *)_this)->cnt;
@@ -625,7 +678,7 @@
 #endif
 		;
 		_m = 3; goto P999; /* 0 */
-	case 38: // STATE 7 - enq.pml:21 - [i = (i+1)] (0:0:1 - 1)
+	case 40: // STATE 7 - enq.pml:21 - [i = (i+1)] (0:0:1 - 1)
 		IfNotBlocked
 		reached[0][7] = 1;
 		(trpt+1)->bup.oval = now.i;
@@ -635,7 +688,7 @@
 #endif
 		;
 		_m = 3; goto P999; /* 0 */
-	case 39: // STATE 8 - enq.pml:22 - [tx!esc] (0:0:0 - 1)
+	case 41: // STATE 8 - enq.pml:22 - [tx!esc] (0:0:0 - 1)
 		IfNotBlocked
 		reached[0][8] = 1;
 		if (q_full(now.tx))
@@ -649,7 +702,7 @@
 		
 		qsend(now.tx, 0, 2, 1);
 		_m = 2; goto P999; /* 0 */
-	case 40: // STATE 9 - enq.pml:23 - [tx!data] (0:0:0 - 1)
+	case 42: // STATE 9 - enq.pml:23 - [tx!data] (0:0:0 - 1)
 		IfNotBlocked
 		reached[0][9] = 1;
 		if (q_full(now.tx))
@@ -663,7 +716,7 @@
 		
 		qsend(now.tx, 0, 1, 1);
 		_m = 2; goto P999; /* 0 */
-	case 41: // STATE 10 - enq.pml:24 - [cnt = (cnt+1)] (0:0:1 - 1)
+	case 43: // STATE 10 - enq.pml:24 - [cnt = (cnt+1)] (0:0:1 - 1)
 		IfNotBlocked
 		reached[0][10] = 1;
 		(trpt+1)->bup.oval = ((P0 *)_this)->cnt;
@@ -673,7 +726,7 @@
 #endif
 		;
 		_m = 3; goto P999; /* 0 */
-	case 42: // STATE 11 - enq.pml:25 - [i = (i+1)] (0:0:1 - 1)
+	case 44: // STATE 11 - enq.pml:25 - [i = (i+1)] (0:0:1 - 1)
 		IfNotBlocked
 		reached[0][11] = 1;
 		(trpt+1)->bup.oval = now.i;
@@ -683,7 +736,7 @@
 #endif
 		;
 		_m = 3; goto P999; /* 0 */
-	case 43: // STATE 14 - enq.pml:27 - [((cnt>0))] (0:0:1 - 1)
+	case 45: // STATE 14 - enq.pml:27 - [((cnt>0))] (0:0:1 - 1)
 		IfNotBlocked
 		reached[0][14] = 1;
 		if (!((((P0 *)_this)->cnt>0)))
@@ -695,7 +748,7 @@
 #endif
 			((P0 *)_this)->cnt = 0;
 		_m = 3; goto P999; /* 0 */
-	case 44: // STATE 15 - enq.pml:28 - [tx!flag] (0:0:0 - 1)
+	case 46: // STATE 15 - enq.pml:28 - [tx!flag] (0:0:0 - 1)
 		IfNotBlocked
 		reached[0][15] = 1;
 		if (q_full(now.tx))
@@ -709,7 +762,7 @@
 		
 		qsend(now.tx, 0, 3, 1);
 		_m = 2; goto P999; /* 0 */
-	case 45: // STATE 18 - enq.pml:31 - [tx!flag] (0:0:0 - 1)
+	case 47: // STATE 18 - enq.pml:31 - [tx!flag] (0:0:0 - 1)
 		IfNotBlocked
 		reached[0][18] = 1;
 		if (q_full(now.tx))
@@ -723,7 +776,7 @@
 		
 		qsend(now.tx, 0, 3, 1);
 		_m = 2; goto P999; /* 0 */
-	case 46: // STATE 23 - enq.pml:34 - [-end-] (0:0:0 - 1)
+	case 48: // STATE 23 - enq.pml:34 - [-end-] (0:0:0 - 1)
 		IfNotBlocked
 		reached[0][23] = 1;
 		if (!delproc(1, II)) continue;

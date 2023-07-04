@@ -1,4 +1,11 @@
-never sinc {    /* !(<> ((error==0))) */
+never sinc1 {    /* !((<> ((! ((fram_rx@estado_esc))) || ((fram_rx@estado_rx)))) || (<> ((! ((fram_rx@estado_ocioso))) || ((fram_rx@estado_rx))))) */
+accept_init:
+T0_init:
+	do
+	:: (! (((! ((fram_rx@estado_esc))) || ((fram_rx@estado_rx)))) && ! (((! ((fram_rx@estado_ocioso))) || ((fram_rx@estado_rx))))) -> goto T0_init
+	od;
+}
+never sinc2 {    /* !(<> ((error==0))) */
 accept_init:
 T0_init:
 	do

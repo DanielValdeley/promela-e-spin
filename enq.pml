@@ -4,8 +4,7 @@ chan tx = [1] of {byte}
 
 int max_size=32
 int i;
-int error_TX;
-int error_RX;
+int error;
 
 active proctype fram_tx() {
   int cnt
@@ -82,12 +81,12 @@ estado_esc:
 }
 
 // Perdas de sincronismo (refere-se a flag de incio e fim) no enquadramento são recuperadas em algum momento futuro após erros cessarem
-// ltl sinc {<>(fram_rx@estado_esc -> fram_rx@estado_rx) ||  <>(fram_rx@estado_ocioso -> fram_rx@estado_rx)}
+ltl sinc1 {<>(fram_rx@estado_esc -> fram_rx@estado_rx) ||  <>(fram_rx@estado_ocioso -> fram_rx@estado_rx)}
 // 1. formula de vez em quando acontece 
 // 2. fourma  sera uma expressa quando isso acontece outra coisa teve acontecer (implicacao)
 // nao é vdd que isso nunca aconteca
 // obs.: enventualmente em ingles = implica que de fato algo vai acontecer no futuro de fato
-ltl sinc {<>(error == 0)} 
+ltl sinc2 {<>(error == 0)} 
 
 // Quadros que excedam o tamanho máximo são descartados pelo receptor
 ltl desc {[](fram_rx@estado_rx && i > max_size) -> fram_rx@estado_ocioso}
