@@ -23,6 +23,9 @@
 
     # Executa o verificador
     ./pan -a
+
+    # para aumentar profundidade
+    -m x
 ```
 ### Verificação de Protocolos
 

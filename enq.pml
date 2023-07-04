@@ -4,6 +4,8 @@ chan tx = [1] of {byte}
 
 int max_size=32
 int i;
+int error_TX;
+int error_RX;
 
 active proctype fram_tx() {
   int cnt
@@ -51,6 +53,7 @@ estado_rx:
 
   do 
   :: tx?data -> cnt++
+     error = 0
      i++
   :: tx?esc -> goto estado_esc
   :: tx?flag -> 
@@ -69,21 +72,28 @@ estado_esc:
      i++
      goto estado_rx
   :: tx?flag -> // erro ... não deveria receber flag
+     error = 1
     goto estado_ocioso
   :: tx?esc -> // erro ... não deveria receber esc
+     error = 1
     goto estado_ocioso
   :: tx?octeto -> skip // simula erro de recepcao
   od
 }
 
-// Perdas de sincronismo no enquadramento são recuperadas em algum momento futuro após erros cessarem
-ltl rec {<>(fram_rx@estado_esc -> fram_rx@estado_rx) ||  <>(fram_rx@estado_ocioso -> fram_rx@estado_rx)}
+// Perdas de sincronismo (refere-se a flag de incio e fim) no enquadramento são recuperadas em algum momento futuro após erros cessarem
+// ltl sinc {<>(fram_rx@estado_esc -> fram_rx@estado_rx) ||  <>(fram_rx@estado_ocioso -> fram_rx@estado_rx)}
+// 1. formula de vez em quando acontece 
+// 2. fourma  sera uma expressa quando isso acontece outra coisa teve acontecer (implicacao)
+// nao é vdd que isso nunca aconteca
+// obs.: enventualmente em ingles = implica que de fato algo vai acontecer no futuro de fato
+ltl sinc {<>(error == 0)} 
 
 // Quadros que excedam o tamanho máximo são descartados pelo receptor
 ltl desc {[](fram_rx@estado_rx && i > max_size) -> fram_rx@estado_ocioso}
 
 // Resultado e conclusao rec
-// rec: frequentemente ao está no estado esc ou ocioso os erros são cessados no futuro, isso implica que irá para o estado rx.
+// sinc: frequentemente ao está no estado esc ou ocioso os erros são cessados no futuro, isso implica que irá para o estado rx.
 
 // Resultado e conclusao desc
 // Indefinitivamente ao esta no estado rx e o quadro for maior que o tamanho máximo será descartado, isso implica em ir para o estado ocioso.

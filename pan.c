@@ -520,30 +520,32 @@ uchar reached2 [] = {
 uchar *loopstate2;
 
 short src_ln1 [] = {
-	  0,  41,  42,  44,  44,  45,  45,  46, 
-	 46,  47,  47,  43,  50,  43,  53,  53, 
-	 54,  55,  55,  56,  58,  58,  59,  59, 
-	 57,  61,  61,  61,  62,  62,  52,  65, 
-	 52,  67,  68,  69,  70,  71,  72,  73, 
-	 74,  75,  75,  66,  77,  66,  77,   0, };
+	  0,  42,  43,  45,  45,  46,  46,  47, 
+	 47,  48,  48,  44,  51,  44,  54,  54, 
+	 55,  56,  57,  57,  58,  60,  60,  61, 
+	 61,  59,  63,  63,  63,  64,  64,  53, 
+	 67,  53,  69,  70,  71,  72,  73,  74, 
+	 75,  76,  77,  78,  79,  79,  68,  81, 
+	 68,  81,   0, };
 S_F_MAP src_file1 [] = {
 	{ "-", 0, 0 },
-	{ "enq.pml", 1, 46 },
-	{ "-", 47, 48 }
+	{ "enq.pml", 1, 49 },
+	{ "-", 50, 51 }
 };
 uchar reached1 [] = {
 	  0,   0,   0,   1,   1,   1,   1,   1, 
 	  1,   1,   1,   0,   1,   1,   1,   0, 
-	  0,   1,   1,   1,   1,   1,   1,   1, 
-	  0,   1,   1,   1,   1,   1,   0,   1, 
-	  1,   1,   0,   0,   1,   1,   1,   1, 
-	  1,   1,   1,   0,   1,   1,   0,   0, };
+	  0,   0,   1,   1,   1,   1,   1,   1, 
+	  1,   0,   1,   1,   1,   1,   1,   0, 
+	  1,   1,   1,   0,   0,   1,   1,   0, 
+	  1,   1,   0,   1,   1,   1,   0,   1, 
+	  1,   0,   0, };
 uchar *loopstate1;
 
 short src_ln0 [] = {
-	  0,  12,  13,  14,  17,  19,  19,  20, 
-	 21,  22,  23,  24,  18,  26,  26,  27, 
-	 28,  29,  30,  31,  16,  33,  16,  33, 
+	  0,  13,  14,  15,  18,  20,  20,  21, 
+	 22,  23,  24,  25,  19,  27,  27,  28, 
+	 29,  30,  31,  32,  17,  34,  17,  34, 
 	  0, };
 S_F_MAP src_file0 [] = {
 	{ "-", 0, 0 },
@@ -588,7 +590,7 @@ short Air[] = {  (short) Air0, (short) Air1, (short) Air2, (short) Air3, (short)
 char *procname[] = {
    "fram_tx",
    "fram_rx",
-   "rec",
+   "sinc",
    "desc",
    ":np_:",
 	0
@@ -599,7 +601,7 @@ enum btypes { NONE=0, N_CLAIM=1, I_PROC=2, A_PROC=3, P_PROC=4, E_TRACE=5, N_TRAC
 int Btypes[] = {
    3,	/* fram_tx */
    3,	/* fram_rx */
-   1,	/* rec */
+   1,	/* sinc */
    1,	/* desc */
    0	/* :np_: */
 };
@@ -875,16 +877,16 @@ addproc(int calling_pid, int priority, int n)
 		spin_c_typ[0] = 3; /* desc */
 		((P5 *)pptr(h))->c_cur[0] = 3;
 		reached3[3]=1;
-		spin_c_typ[1] = 2; /* rec */
+		spin_c_typ[1] = 2; /* sinc */
 		((P5 *)pptr(h))->c_cur[1] = 3;
 		reached2[3]=1;
 		((P5 *)pptr(h))->_t = 2;
 		((P5 *)pptr(h))->_p = 3;
-		((P5 *)pptr(h))->_n = 1; /* rec */
+		((P5 *)pptr(h))->_n = 1; /* sinc */
 		src_claim = src_ln2;
 #ifndef BFS
 		if (whichclaim == -1 && claimname == NULL)
-			printf("pan: ltl formula rec\n");
+			printf("pan: ltl formula sinc\n");
 #endif
 		if (whichclaim != -1)
 		{	select_claim(whichclaim);
@@ -917,7 +919,7 @@ addproc(int calling_pid, int priority, int n)
 		locinit3(h);
 #endif
 		break;
-	case 2:	/* rec */
+	case 2:	/* sinc */
 		((P2 *)pptr(h))->_t = 2;
 		((P2 *)pptr(h))->_p = 3;
 #ifdef HAS_PRIORITY
@@ -1137,8 +1139,7 @@ run(void)
 	accpstate[3][8] = 1;
 	accpstate[3][3] = 1;
 	accpstate[2][3] = 1;
-	visstate[1][43] = 1;
-	visstate[1][30] = 1;
+	visstate[1][31] = 1;
 	visstate[1][1] = 1;
 	retrans(0, _nstates0, _start0, src_ln0, reached0, loopstate0);
 	retrans(1, _nstates1, _start1, src_ln1, reached1, loopstate1);
@@ -12495,9 +12496,11 @@ iniglobals(int calling_pid)
 		now.tx = addqueue(calling_pid, 1, 0);
 		now.max_size = 32;
 		now.i = 0;
+		now.error = 0;
 #ifdef VAR_RANGES
 		logval("max_size", now.max_size);
 		logval("i", now.i);
+		logval("error", now.error);
 #endif
 }
 
@@ -14253,6 +14256,7 @@ c_globals(void)
 	c_chandump(now.tx);
 	printf("	int    max_size:	%d\n", now.max_size);
 	printf("	int    i:	%d\n", now.i);
+	printf("	int    error:	%d\n", now.error);
 }
 void
 c_locals(int pid, int tp)
@@ -14308,7 +14312,7 @@ c_chandump(int from)
 	printf("\n");
 }
 
-Trans *t_id_lkup[86];
+Trans *t_id_lkup[89];
 
 
 #ifdef BFS_PAR

@@ -1,8 +1,8 @@
-never rec {    /* !((<> ((! ((fram_rx@estado_esc))) || ((fram_rx@estado_rx)))) || (<> ((! ((fram_rx@estado_ocioso))) || ((fram_rx@estado_rx))))) */
+never sinc {    /* !(<> ((error==0))) */
 accept_init:
 T0_init:
 	do
-	:: (! (((! ((fram_rx@estado_esc))) || ((fram_rx@estado_rx)))) && ! (((! ((fram_rx@estado_ocioso))) || ((fram_rx@estado_rx))))) -> goto T0_init
+	:: (! (((error==0)))) -> goto T0_init
 	od;
 }
 never desc {    /* !((! ([] (((fram_rx@estado_rx)) && ((i>max_size))))) || ((fram_rx@estado_ocioso))) */

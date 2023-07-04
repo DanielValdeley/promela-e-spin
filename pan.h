@@ -102,7 +102,7 @@
 #ifndef NFAIR
 	#define NFAIR	2	/* must be >= 2 */
 #endif
-#define REM_REFS	13
+#define REM_REFS	5
 #define HAS_LTL	1
 #define HAS_CODE	1
 #if defined(RANDSTORE) && !defined(RANDSTOR)
@@ -141,19 +141,19 @@ typedef struct S_F_MAP {
 } S_F_MAP;
 
 #define _nstates3	12	/* desc */
-#define minseq3	75
-#define maxseq3	85
+#define minseq3	78
+#define maxseq3	88
 #define _endstate3	11
 
-#define _nstates2	7	/* rec */
-#define minseq2	69
-#define maxseq2	74
+#define _nstates2	7	/* sinc */
+#define minseq2	72
+#define maxseq2	77
 #define _endstate2	6
 
-#define _nstates1	47	/* fram_rx */
+#define _nstates1	50	/* fram_rx */
 #define minseq1	23
-#define maxseq1	68
-#define _endstate1	46
+#define maxseq1	71
+#define _endstate1	49
 
 #define _nstates0	24	/* fram_tx */
 #define minseq0	0
@@ -170,8 +170,8 @@ extern S_F_MAP src_file1[];
 extern S_F_MAP src_file0[];
 
 #define T_ID	unsigned char
-#define _T5	44
-#define _T2	45
+#define _T5	47
+#define _T2	48
 #define WS		8 /* word size in bytes */
 #define SYNC	0
 #define ASYNC	1
@@ -196,7 +196,7 @@ typedef struct P3 { /* desc */
 } P3;
 #define Air3	(sizeof(P3) - 3)
 
-typedef struct P2 { /* rec */
+typedef struct P2 { /* sinc */
 	unsigned _pid : 8;  /* 0..255 */
 	unsigned _t   : 4; /* proctype */
 	unsigned _p   : 7; /* state    */
@@ -448,6 +448,7 @@ typedef struct State {
 	uchar tx;
 	int max_size;
 	int i;
+	int error;
 #ifdef TRIX
 	/* room for 512 proc+chan ptrs, + safety margin */
 	char *_ids_[MAXPROC+MAXQ+4];
@@ -847,7 +848,7 @@ void qsend(int, int, int, int);
 #define GLOBAL	7
 #define BAD	8
 #define ALPHA_F	9
-#define NTRANS	46
+#define NTRANS	49
 #if defined(BFS_PAR) || NCORE>1
 	void e_critical(int);
 	void x_critical(int);
