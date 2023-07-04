@@ -82,10 +82,6 @@ estado_esc:
 
 // Perdas de sincronismo (refere-se a flag de incio e fim) no enquadramento são recuperadas em algum momento futuro após erros cessarem
 ltl sinc1 {<>(fram_rx@estado_esc -> fram_rx@estado_rx) ||  <>(fram_rx@estado_ocioso -> fram_rx@estado_rx)}
-// 1. formula de vez em quando acontece 
-// 2. fourma  sera uma expressa quando isso acontece outra coisa teve acontecer (implicacao)
-// nao é vdd que isso nunca aconteca
-// obs.: enventualmente em ingles = implica que de fato algo vai acontecer no futuro de fato
 ltl sinc2 {<>(error == 0)} 
 
 // Quadros que excedam o tamanho máximo são descartados pelo receptor

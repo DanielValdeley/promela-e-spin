@@ -24,3 +24,12 @@ T0_S3:
 	:: ((((fram_rx@estado_rx)) && ((i>max_size)))) -> goto accept_S3
 	od;
 }
+never teste {    /* !([] (((fram_rx@estado_rx)) && ((i>max_size)))) */
+T0_init:
+	do
+	:: atomic { (! ((((fram_rx@estado_rx)) && ((i>max_size))))) -> assert(!(! ((((fram_rx@estado_rx)) && ((i>max_size)))))) }
+	:: (1) -> goto T0_init
+	od;
+accept_all:
+	skip
+}
